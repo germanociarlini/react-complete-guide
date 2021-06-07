@@ -23,7 +23,7 @@ const ExpenseForm = ({ onSaveNewExpense, onStopEditing }) => {
     const newExpenseData = {
       id: Math.random().toString(),
       title: newTitle,
-      amount: newAmount,
+      amount: +newAmount,
       date: new Date(newDate),
     };
 
