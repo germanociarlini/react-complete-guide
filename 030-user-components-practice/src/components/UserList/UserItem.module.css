@@ -1,0 +1,11 @@
+.user-item {
+  background: #3f4346;
+  border-radius: 0.8rem;
+  padding: 1rem;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.26);
+  transition: box-shadow 0.1s linear;
+}
+
+.user-item:hover {
+  box-shadow: 0 0 4px rgba(255, 211, 14, 0.52);
+}

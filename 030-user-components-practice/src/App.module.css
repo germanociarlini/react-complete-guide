@@ -1,0 +1,16 @@
+.app {
+  background: #343a40;
+  color: #e1e8eb;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+}
+
+.app main {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3rem;
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}

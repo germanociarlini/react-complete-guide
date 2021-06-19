@@ -1,0 +1,40 @@
+.background {
+  display: grid;
+  place-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.alert {
+  display: flex;
+  flex-direction: column;
+  background: #3f4346;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.52);
+  border-radius: 0.8rem;
+}
+
+.alert header {
+  display: flex;
+  justify-content: space-between;
+  background: #7952b3;
+  border-radius: 0.8rem 0.8rem 0 0;
+  padding: 1rem;
+}
+
+.alert main {
+  padding: 1rem;
+}
+
+.close-button {
+  cursor: pointer;
+}
+
+.alert footer {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
