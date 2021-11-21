@@ -8,6 +8,7 @@ const MEALS_URL =
 
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const loadMeals = async () => {
     const response = await fetch(MEALS_URL);
@@ -25,6 +26,7 @@ const AvailableMeals = () => {
     }
 
     setMeals(meals);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -40,6 +42,14 @@ const AvailableMeals = () => {
       price={meal.price}
     />
   ));
+
+  if (isLoading) {
+    return (
+      <section className={classes.MealsLoading}>
+        <p>Loading...</p>
+      </section>
+    );
+  }
 
   return (
     <section className={classes.meals}>
