@@ -9,9 +9,15 @@ const MEALS_URL =
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const loadMeals = async () => {
     const response = await fetch(MEALS_URL);
+
+    if (!response.ok) {
+      throw new Error({ message: "Something went wrong..." });
+    }
+
     const rawMeals = await response.json();
 
     const meals = [];
@@ -26,11 +32,20 @@ const AvailableMeals = () => {
     }
 
     setMeals(meals);
-    setIsLoading(false);
   };
 
   useEffect(() => {
-    loadMeals();
+    const fetchMeals = async () => {
+      try {
+        await loadMeals();
+      } catch (e) {
+        setError(e.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMeals();
   }, []);
 
   const mealsList = meals.map((meal) => (
@@ -47,6 +62,14 @@ const AvailableMeals = () => {
     return (
       <section className={classes.MealsLoading}>
         <p>Loading...</p>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className={classes.MealsError}>
+        <p>{error}</p>
       </section>
     );
   }
