@@ -1,12 +1,21 @@
 import { createStore } from "redux";
 
-const counterReducer = (state = { counter: 0 }, action) => {
+const initialState = { counter: 0, showCounter: true };
+
+const counterReducer = (state = initialState, action) => {
   switch (action.type) {
     case "INCREMENT":
-      return { counter: state.counter + 1 };
+      return { ...state, counter: state.counter + 1 };
+
+    case "INCREASE":
+      return { ...state, counter: state.counter + action.amount };
 
     case "DECREMENT":
-      return { counter: state.counter - 1 };
+      return { ...state, counter: state.counter - 1 };
+
+    case "TOGGLE": {
+      return { ...state, showCounter: !state.showCounter };
+    }
 
     default:
       return state;
