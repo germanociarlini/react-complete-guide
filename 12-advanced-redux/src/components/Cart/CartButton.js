@@ -5,12 +5,8 @@ import { useSelector } from "react-redux";
 
 const CartButton = (props) => {
   const dispatch = useDispatch();
-  const calculateTotalItems = (products) => {
-    return products.reduce((a, b) => a + b.quantity, 0);
-  };
-  const totalItems = useSelector((state) =>
-    calculateTotalItems(state.cart.products)
-  );
+
+  const totalItems = useSelector((state) => state.cart.totalItems);
 
   const onClickHandler = () => {
     dispatch(cartActions.toggle());

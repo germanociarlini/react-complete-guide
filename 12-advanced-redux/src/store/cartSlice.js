@@ -5,51 +5,46 @@ const toggle = (state) => {
 };
 
 const add = (state, action) => {
-  const product = state.products.find(
-    (product) => product.id === action.payload.id
+  const addedProduct = action.payload;
+  const existingProduct = state.products.find(
+    (product) => product.id === addedProduct.id
   );
-  if (product) {
-    state.products.map((product) => {
-      if (product.id === action.payload.id) {
-        product.total += product.price;
-        product.quantity += 1;
-      }
-      return product;
-    });
+  state.totalItems++;
+  if (existingProduct) {
+    existingProduct.quantity++;
+    existingProduct.total += existingProduct.price;
   } else {
-    const newProduct = {
-      ...action.payload,
-      total: action.payload.price,
+    state.products.push({
+      id: addedProduct.id,
+      name: addedProduct.name,
+      price: addedProduct.price,
+      total: addedProduct.price,
       quantity: 1,
-    };
-    state.products = [...state.products, newProduct];
+    });
   }
 };
 
 const remove = (state, action) => {
-  const product = state.products.find(
-    (product) => product.id === action.payload
+  const removedId = action.payload;
+  const removedProduct = state.products.find(
+    (product) => product.id === removedId
   );
-  if (product) {
-    if (product.quantity === 1) {
+  state.totalItems--;
+  if (removedProduct) {
+    if (removedProduct.quantity === 1) {
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       );
     } else {
-      state.products = state.products.map((product) => {
-        if (product.id === action.payload) {
-          product.quantity -= 1;
-          product.total -= product.price;
-        }
-        return product;
-      });
+      removedProduct.quantity--;
+      removedProduct.total -= removedProduct.price;
     }
   }
 };
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState: { isShowing: true, products: [] },
+  initialState: { isShowing: true, products: [], totalItems: 0 },
   reducers: { toggle, add, remove },
 });
 
