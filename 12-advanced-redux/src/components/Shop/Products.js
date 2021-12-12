@@ -8,13 +8,13 @@ const Products = () => {
       <ul>
         <ProductItem
           id="1"
-          title="Test"
+          name="Test"
           price={6}
           description="This is a product - amazing!"
         />
         <ProductItem
           id="2"
-          title="Another Product"
+          name="Another Product"
           price={15}
           description="RONALDINHO SOCK SEEEERRRRRR"
         />

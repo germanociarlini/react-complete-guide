@@ -4,19 +4,19 @@ import Card from "../UI/Card";
 import classes from "./ProductItem.module.css";
 
 const ProductItem = (props) => {
-  const { id, title, price, description } = props;
+  const { id, name, price, description } = props;
 
   const dispatch = useDispatch();
 
   const onAddHandler = () => {
-    dispatch(cartActions.add({ id, title, price, description }));
+    dispatch(cartActions.add({ id, name, price, description }));
   };
 
   return (
     <li className={classes.item}>
       <Card>
         <header>
-          <h3>{title}</h3>
+          <h3>{name}</h3>
           <div className={classes.price}>${price.toFixed(2)}</div>
         </header>
         <p>{description}</p>
