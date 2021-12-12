@@ -4,6 +4,11 @@ const toggle = (state) => {
   state.isShowing = !state.isShowing;
 };
 
+const set = (state, action) => {
+  state.totalItems = action.payload.totalItems || 0;
+  state.products = action.payload.products || [];
+};
+
 const add = (state, action) => {
   const addedProduct = action.payload;
   const existingProduct = state.products.find(
@@ -45,7 +50,7 @@ const remove = (state, action) => {
 const cartSlice = createSlice({
   name: "cart",
   initialState: { isShowing: true, products: [], totalItems: 0 },
-  reducers: { toggle, add, remove },
+  reducers: { toggle, set, add, remove },
 });
 
 export const cartActions = cartSlice.actions;
