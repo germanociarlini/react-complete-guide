@@ -1,9 +1,13 @@
 import React from "react";
+import { Route } from "react-router-dom";
 
 export default function Home() {
   return (
-    <div>
+    <section>
       <h1>Home</h1>
-    </div>
+      <Route path="/home/new-user">
+        <p>Welcome, New User</p>
+      </Route>
+    </section>
   );
 }
