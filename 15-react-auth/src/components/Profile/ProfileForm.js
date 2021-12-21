@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import AuthContext from "../../store/authContext";
 import classes from "./ProfileForm.module.css";
 
@@ -8,6 +8,7 @@ const NEW_PASSWORD_URL =
 
 const ProfileForm = () => {
   const newPasswordRef = useRef();
+  const history = useHistory();
   const authContext = useContext(AuthContext);
 
   const onSubmitHandler = async (event) => {
@@ -25,6 +26,8 @@ const ProfileForm = () => {
       },
       body: JSON.stringify({ idToken, password, returnSecureToken: true }),
     });
+
+    history.replace("/");
   };
 
   return (
