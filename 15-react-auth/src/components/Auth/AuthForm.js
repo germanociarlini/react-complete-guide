@@ -45,7 +45,11 @@ const AuthForm = () => {
       const data = await response.json();
 
       if (response.ok) {
-        authContext.login(data.idToken);
+        const currentTime = new Date().getTime();
+        const expirationTimeInMs = +data.expiresIn * 1000;
+        const expirationTime = new Date(currentTime + expirationTimeInMs);
+
+        authContext.login(data.idToken, expirationTime.toISOString());
         history.replace("/");
       } else {
         let errorMessage = "Authentication Failed";
