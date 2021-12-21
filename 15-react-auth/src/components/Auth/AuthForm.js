@@ -5,6 +5,9 @@ import classes from "./AuthForm.module.css";
 const SIGN_UP_URL =
   "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDg5yTnqyVSs6EgVCpCkugNe9Jp5g-oUVA";
 
+const SIGN_IN_URL =
+  "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDg5yTnqyVSs6EgVCpCkugNe9Jp5g-oUVA";
+
 const AuthForm = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -25,29 +28,30 @@ const AuthForm = () => {
 
     setIsLoading(true);
 
+    const url = isLogin ? SIGN_IN_URL : SIGN_UP_URL;
+
     try {
-      if (isLogin) {
+      const response = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({ email, password, returnSecureToken: true }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data);
       } else {
-        const response = await fetch(SIGN_UP_URL, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify({ email, password, returnSecureToken: true }),
-        });
-
-        if (response.ok) {
-        } else {
-          const data = await response.json();
-
-          let errorMessage = "Authentication Failed";
-          if (data && data.error && data.error.message) {
-            errorMessage = data.error.message;
-          }
-          alert(errorMessage);
+        let errorMessage = "Authentication Failed";
+        if (data && data.error && data.error.message) {
+          errorMessage = data.error.message;
         }
+        throw new Error(errorMessage);
       }
     } catch (e) {
+      alert(e.message);
     } finally {
       setIsLoading(false);
     }
