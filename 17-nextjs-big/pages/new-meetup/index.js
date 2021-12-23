@@ -1,5 +1,6 @@
 import NewMeetupForm from "../../components/meetups/NewMeetupForm";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const NewMeetup = () => {
   const router = useRouter();
@@ -20,7 +21,18 @@ const NewMeetup = () => {
     router.push("/");
   };
 
-  return <NewMeetupForm onAddMeetup={onSubmitHandler} />;
+  return (
+    <>
+      <Head>
+        <title>Moga Village | Issue Quest</title>
+        <meta
+          name="description"
+          content="Issue a new Guild Quest to Moga Village."
+        />
+      </Head>
+      <NewMeetupForm onAddMeetup={onSubmitHandler} />
+    </>
+  );
 };
 
 export default NewMeetup;

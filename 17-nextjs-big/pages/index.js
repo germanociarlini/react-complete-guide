@@ -1,8 +1,20 @@
 import { MongoClient } from "mongodb";
+import Head from "next/head";
 import MeetupList from "../components/meetups/MeetupList";
 
 const Home = ({ meetups }) => {
-  return <MeetupList meetups={meetups} />;
+  return (
+    <>
+      <Head>
+        <title>Moga Village | Guild Quests</title>
+        <meta
+          name="description"
+          content="Browse all Guild Quests issued to Moga Village."
+        />
+      </Head>
+      <MeetupList meetups={meetups} />
+    </>
+  );
 };
 
 const MONGO_CONNECTION =
