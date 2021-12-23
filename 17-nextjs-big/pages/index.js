@@ -27,8 +27,26 @@ const DUMMY_QUESTS = [
   },
 ];
 
-const Home = () => {
-  return <MeetupList meetups={DUMMY_QUESTS} />;
+const Home = ({ meetups }) => {
+  return <MeetupList meetups={meetups} />;
+};
+
+// export const getServerSideProps = async (context) => {
+//   const request = context.req;
+//   const response = context.res;
+
+//   // fetch some async data
+//   return {
+//     props: { meetups: DUMMY_QUESTS },
+//   };
+// };
+
+export const getStaticProps = async () => {
+  // fetch some data - this code will only be reached when building
+  return {
+    props: { meetups: DUMMY_QUESTS },
+    revalidate: 10,
+  };
 };
 
 export default Home;
