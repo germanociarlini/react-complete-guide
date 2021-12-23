@@ -1,3 +1,4 @@
+import { MongoClient, ObjectId } from "mongodb";
 import MeetupDetail from "../../components/meetups/MeetupDetail";
 
 const MeetupDetails = ({ meetupData }) => {
@@ -11,31 +12,47 @@ const MeetupDetails = ({ meetupData }) => {
   );
 };
 
+const MONGO_CONNECTION =
+  "mongodb+srv://ciarlini-nextjs-demo:4j8IedfvzvZ1WHkb@ciarlini-cluster-for-ne.3neug.mongodb.net/meetups?retryWrites=true&w=majority";
+
 export const getStaticPaths = async () => {
+  const client = await MongoClient.connect(MONGO_CONNECTION);
+  const db = client.db();
+  const meetupsCollection = db.collection("meetups");
+
+  const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
+
+  client.close();
+
+  const paths = meetups.map((meetup) => ({
+    params: { meetupId: meetup._id.toString() },
+  }));
+
   return {
     fallback: false,
-    paths: [
-      { params: { meetupId: "1" } },
-      { params: { meetupId: "2" } },
-      { params: { meetupId: "3" } },
-    ],
+    paths,
   };
 };
 
 export const getStaticProps = async (context) => {
-  // fetch data for a meetup
-
   const { meetupId } = context.params;
+
+  const client = await MongoClient.connect(MONGO_CONNECTION);
+  const db = client.db();
+  const meetupsCollection = db.collection("meetups");
+
+  const meetupData = await meetupsCollection.findOne({
+    _id: ObjectId(meetupId),
+  });
 
   return {
     props: {
       meetupData: {
-        id: meetupId,
-        image:
-          "https://cdna.artstation.com/p/assets/images/images/017/908/210/medium/daniel-choo-lagiacrus-monster-hunter-tyvik.jpg?1557815007",
-        title: "Fisherman's Fiend",
-        address: "Deserted Island (D)",
-        description: "Hunt a Lagiacrus",
+        id: meetupData._id.toString(),
+        title: meetupData.title,
+        image: meetupData.image,
+        address: meetupData.address,
+        description: meetupData.description,
       },
     },
   };
