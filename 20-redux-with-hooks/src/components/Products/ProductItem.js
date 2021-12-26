@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
-import { ProductsContext } from "../../context/products-context";
+import React from "react";
 import Card from "../UI/Card";
 import "./ProductItem.css";
+import { useStore } from "../../store/store";
 
-const ProductItem = (props) => {
-  const toggleFav = useContext(ProductsContext).toggleFav;
+const ProductItem = React.memo((props) => {
+  const [, dispatch] = useStore(false);
 
   const toggleFavHandler = () => {
-    toggleFav(props.id);
+    dispatch("TOGGLE_FAV", props.id);
   };
 
   return (
@@ -24,6 +24,6 @@ const ProductItem = (props) => {
       </div>
     </Card>
   );
-};
+});
 
 export default ProductItem;
